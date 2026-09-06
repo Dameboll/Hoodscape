@@ -1,0 +1,18 @@
+import {and,desc,eq,gte,ne} from 'drizzle-orm';
+import {getChatGPTUser} from '@/app/chatgpt-auth';
+import {getDb} from '@/db';
+import {players} from '@/db/schema';
+import {clampWorld,pvpZoneAt,type PvpMode,type RemotePlayer} from '@/game/simulation/online';
+import {migrateSave,validSave,type Save} from '@/game/simulation/state';
+import {validProfile} from '@/game/simulation/profile';
+export const dynamic='force-dynamic';
+
+const safeJson=(raw:string)=>{try{const value=JSON.parse(raw);return validSave(value)?migrateSave(value):null}catch{return null}};
+const remote=(p:typeof players.$inferSelect):RemotePlayer|null=>{const save=safeJson(p.saveJson);if(!save?.profile)return null;return{id:p.userId,name:p.handle,profile:save.profile,x:p.x,z:p.z,yaw:p.yaw,pvpMode:p.pvpMode as PvpMode,zone:p.zone,health:p.health,kills:p.kills,deaths:p.deaths}};
+async function nearby(userId:string){const db=getDb(),active=Date.now()-15000;const rows=await db.select().from(players).where(and(ne(players.userId,userId),gte(players.updatedAt,active))).orderBy(desc(players.updatedAt)).limit(32);return rows.map(remote).filter((x):x is RemotePlayer=>!!x)}
+export async function GET(){const user=await getChatGPTUser();if(!user)return Response.json({auth:false},{status:401});try{const db=getDb();const own=(await db.select().from(players).where(eq(players.userId,user.id)).limit(1))[0];return Response.json({auth:true,user:{displayName:user.displayName,email:user.email},player:own?{name:own.handle,save:safeJson(own.saveJson),pvpMode:own.pvpMode,kills:own.kills,deaths:own.deaths}:null,players:await nearby(user.id)})}catch(error){console.error('world GET failed',error);return Response.json({error:'The shared world is temporarily unavailable.'},{status:503})}}
+export async function POST(request:Request){const user=await getChatGPTUser();if(!user)return Response.json({auth:false},{status:401});try{const body=await request.json() as {type?:string;save?:unknown;x?:number;z?:number;yaw?:number;pvpMode?:PvpMode};const db=getDb(),now=Date.now(),x=clampWorld(body.x,-66,66),z=clampWorld(body.z,-71,71),yaw=clampWorld(body.yaw,-100000,100000),pvpMode:PvpMode=body.pvpMode==='ready'?'ready':'safe',zone=pvpZoneAt(x,z)?.id||null;
+ if(body.type==='save'){if(!validSave(body.save)||(JSON.stringify(body.save).length>120000))return Response.json({error:'Invalid character save.'},{status:400});const save=migrateSave(body.save as Save);if(!save.profile||!validProfile(save.profile))return Response.json({error:'Create your character first.'},{status:400});const saveJson=JSON.stringify(save);await db.insert(players).values({userId:user.id,email:user.email,displayName:user.displayName,handle:save.profile.name,saveJson,x,z,yaw,pvpMode,zone,health:save.health,createdAt:now,updatedAt:now}).onConflictDoUpdate({target:players.userId,set:{email:user.email,displayName:user.displayName,handle:save.profile.name,saveJson,x,z,yaw,pvpMode,zone,health:save.health,updatedAt:now}})}
+ else{const own=(await db.select({id:players.userId}).from(players).where(eq(players.userId,user.id)).limit(1))[0];if(!own)return Response.json({error:'account_required'},{status:409});await db.update(players).set({x,z,yaw,pvpMode,zone,updatedAt:now}).where(eq(players.userId,user.id))}
+ const self=(await db.select({x:players.x,z:players.z,health:players.health,pvpMode:players.pvpMode,kills:players.kills,deaths:players.deaths}).from(players).where(eq(players.userId,user.id)).limit(1))[0];return Response.json({ok:true,zone,self,players:await nearby(user.id)});
+ }catch(error){console.error('world POST failed',error);return Response.json({error:'Could not sync with Saint Mercer.'},{status:503})}}
