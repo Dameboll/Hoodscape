@@ -2,11 +2,11 @@
 
 HOODSCAPE is a browser-based third-person urban RPG set in Saint Mercer. It is designed as an open-world sandbox first: the conspiracy storyline is an optional path inside a living city, alongside jobs, crime, progression, races, court activities, relationships, and a shared-world multiplayer foundation.
 
-The long-term story follows a fictional civic redevelopment experiment that gradually reveals the city is a manipulated simulation. Chapters 1–3 are playable; later chapters and the postgame awakening are documented in `docs/STORY_BIBLE.md`.
+The long-term story follows a fictional civic redevelopment experiment that gradually reveals the city is a manipulated simulation. Chapters 1–4 are playable; later chapters and the postgame awakening are documented in `docs/STORY_BIBLE.md`.
 
 ## Current playable slice
 
-- Full 3D Saint Mercer district with Rapier movement, camera collision, traffic, residents, police, shops, homes, vehicles, combat, weapons, heat, and five progression skills.
+- Full 3D Saint Mercer district with Rapier movement, camera collision, traffic, varied residents, police, shops, homes, vehicles, combat, weapons, Heat, four crew territories, and five progression skills.
 - Character creation with name, pronouns, skin tone, hair color, face, head style, physique, frame, street style, background, and personality. The creator keeps a full-body model preview visible beside the choices.
 - Optional Story or Sandbox onboarding. Sandbox players can ignore the main plot and build a life through jobs, street work, training, races, dice, basketball timing sessions, vehicles, and relationships.
 - Sign in with ChatGPT account flow, cloud-backed character saves, nearby player presence, safe/PvP toggle, server-validated PvP zones, knockouts, and online K/D tracking.

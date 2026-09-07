@@ -43,6 +43,19 @@ export function createWorld(scene:T.Scene){
 	for(const x of [37.8,48.2])box(x,.09,5,1.5,.18,41,'#a29b90');
 	building(-52,52,15,12,13,'#88766b');building(-51,1,16,13,11,'#917c70');building(55,57,15,12,14,'#847b76');
 	sign('EAST SERVICE',48.9,2.7,24,5,.7,'#405d58','#f5dfae',-Math.PI/2);
+	// District 09 now reads as a city rather than a single block: secondary streets,
+	// storefronts, service yards, and north/south infill extend the playable silhouette.
+	for(const [x,z,w,d] of [[-48,-63,24,7],[-48,65,25,7],[48,-8,25,7],[48,39,25,7],[24,65,24,7],[-24,-63,24,7]] as [number,number,number,number][]) {box(x,.012,z,w,.025,d,'#393f45');for(let dx=-w/2+2;dx<w/2;dx+=4)box(x+dx,.03,z,.18,.014,2.1,'#c2a363')}
+	building(-50,-57,13,10,11,'#795e5b','CINDER ROW','#8c4b46');
+	building(-49,64,14,10,12,'#78807c','NORTHLINE MART','#566b62');
+	building(52,-6,13,12,10,'#777e82','MERCER RECORDS','#4f6871');
+	building(54,38,15,10,12,'#806e61','FREIGHT SOCIAL','#4e8178');
+	building(28,67,17,9,10,'#887e75','GRAND AVE','#705a48');
+	building(-23,-62,18,10,13,'#7d7467','CARVER HALL','#455965');
+	for(const [x,z,c] of [[-40,-60,'#8c4b46'],[-39,64,'#c98d58'],[40,-10,'#789398'],[39,36,'#4e8178']] as [number,number,string][]) {cylinder(x,2.1,z,.065,4.2,'#33494d');box(x,4.08,z,.82,.16,.82,c);box(x,3.96,z,.48,.035,.48,'#f3d39a')}
+	for(const [x,z] of [[-38,-57],[-40,61],[38,-11],[39,36],[19,64],[-17,-61]] as [number,number][]) {box(x,.58,z,1.25,1.15,.8,'#4d6864',true);box(x,1.2,z,1.36,.12,.9,'#35484a');for(const dx of [-.42,.42])cylinder(x+dx,.16,z,.11,.28,'#202b32')}
+	for(const [x,z] of [[-41,-51],[-41,58],[41,-2],[41,43],[18,61],[-17,-56]] as [number,number][]) {box(x,.28,z,1.5,.38,1.2,'#b9a38b');box(x,.56,z,.9,.13,1,'#8d6c50');}
+	sign('CINDER CUT',-38,2.7,-63,5,.7,'#8c4b46','#f5dfae',Math.PI/2);sign('NORTHLINE',-38,2.7,65,5,.7,'#566b62','#f5dfae',Math.PI/2);sign('RECORDS',39,2.7,-8,4.6,.7,'#4f6871','#f5dfae',-Math.PI/2);sign('FREIGHT ROW',39,2.7,38,5,.7,'#4e8178','#f5dfae',-Math.PI/2);
  // A restrained distant skyline encloses the district.
  for(let i=0;i<14;i++){const x=-90+i*14,h=15+((i*17)%28);box(x,h/2,-86,10,h,13,'#807e86');box(x,h/2,87,11,h+5,12,'#827d83')}
  // Basketball court, lines, hoops, fence.
@@ -100,8 +113,8 @@ export function createWorld(scene:T.Scene){
 export function makeVehicle(type:string,color:string){const root=new T.Group();const mats={body:new T.MeshStandardMaterial({color,roughness:.46,metalness:.22}),dark:new T.MeshStandardMaterial({color:'#202b32',roughness:.7}),glass:new T.MeshStandardMaterial({color:'#657e87',roughness:.22,metalness:.35}),chrome:new T.MeshStandardMaterial({color:'#a4afa9',metalness:.65,roughness:.3}),light:new T.MeshBasicMaterial({color:'#ffdda3'}),red:new T.MeshBasicMaterial({color:'#d7573f'})};
  function mesh(g:T.BufferGeometry,m:keyof typeof mats,x:number,y:number,z:number,rz=0){const o=new T.Mesh(g,mats[m]);o.position.set(x,y,z);o.rotation.z=rz;o.castShadow=true;root.add(o);return o}
  if(type==='car'){
- mesh(new RoundedBoxGeometry(1.85,.65,4.1,2,.14),'body',0,.65,0);mesh(new RoundedBoxGeometry(1.65,.75,1.95,2,.16),'glass',0,1.25,-.05);mesh(new RoundedBoxGeometry(1.35,.3,1.55,2,.08),'dark',0,1.08,-.05);mesh(new RoundedBoxGeometry(.48,.42,.52,2,.08),'dark',-.48,1.12,-.34);mesh(new RoundedBoxGeometry(.48,.42,.52,2,.08),'dark',.48,1.12,.3);mesh(new RoundedBoxGeometry(1.69,.12,1.55,2,.06),'body',0,1.66,-.13);mesh(new T.BoxGeometry(1.7,.1,.12),'body',0,1.31,.89);for(const x of [-.78,.78])mesh(new T.BoxGeometry(.08,.75,.1),'body',x,1.26,.01);
- for(const z of [-1.3,1.3])for(const x of [-.93,.93]){const tire=mesh(new T.CylinderGeometry(.39,.39,.22,16),'dark',x,.44,z,Math.PI/2);tire.userData.hsWheel=true;tire.userData.hsFront=z>0;tire.userData.hsBaseY=.44;const hub=mesh(new T.CylinderGeometry(.23,.23,.235,12),'chrome',x,.44,z,Math.PI/2);hub.userData.hsWheel=true;hub.userData.hsFront=z>0;hub.userData.hsBaseY=.44;const arch=mesh(new T.TorusGeometry(.43,.055,8,18),'dark',x,.58,z);arch.rotation.y=Math.PI/2}
+ mesh(new RoundedBoxGeometry(1.85,.65,4.1,2,.14),'body',0,.65,0);mesh(new RoundedBoxGeometry(1.65,.75,1.95,2,.16),'glass',0,1.25,-.05);mesh(new RoundedBoxGeometry(1.69,.12,1.55,2,.06),'body',0,1.66,-.13);mesh(new T.BoxGeometry(1.7,.1,.12),'body',0,1.31,.89);for(const x of [-.78,.78])mesh(new T.BoxGeometry(.08,.75,.1),'body',x,1.26,.01);
+ for(const z of [-1.3,1.3])for(const x of [-.93,.93]){mesh(new T.CylinderGeometry(.39,.39,.22,16),'dark',x,.44,z,Math.PI/2);mesh(new T.CylinderGeometry(.23,.23,.235,12),'chrome',x,.44,z,Math.PI/2)}
  mesh(new RoundedBoxGeometry(1.84,.17,.2,1,.04),'chrome',0,.43,2.06);mesh(new RoundedBoxGeometry(1.84,.17,.2,1,.04),'chrome',0,.43,-2.06);for(const x of [-.59,.59]){mesh(new T.BoxGeometry(.48,.22,.04),'light',x,.79,2.06);mesh(new T.BoxGeometry(.45,.2,.04),'red',x,.79,-2.06)}for(const x of [-1,1])mesh(new RoundedBoxGeometry(.2,.12,.28,1,.04),'body',x,1.15,.5);
  }else{
  for(const z of [-.72,.72]){mesh(new T.TorusGeometry(.4,.045,8,24),'dark',0,.45,z,Math.PI/2);const hub=mesh(new T.CylinderGeometry(.07,.07,.16,8),'chrome',0,.45,z,Math.PI/2);for(let a=0;a<8;a++){const spoke=new T.Mesh(new T.CylinderGeometry(.008,.008,.78,4),mats.chrome);spoke.position.set(0,.45,z);spoke.rotation.x=a*Math.PI/4;root.add(spoke)}}
@@ -109,5 +122,44 @@ export function makeVehicle(type:string,color:string){const root=new T.Group();c
  const p=(y:number,z:number)=>new T.Vector3(0,y,z);for(const [a,b] of [[p(.45,-.72),p(.5,0)],[p(.5,0),p(1.05,-.3)],[p(1.05,-.3),p(.45,-.72)],[p(1.05,-.3),p(1.08,.53)],[p(1.08,.53),p(.5,0)],[p(1.08,.53),p(.45,.72)]])rod(a,b);
  mesh(new RoundedBoxGeometry(.24,.09,.4,1,.03),'dark',0,1.16,-.32);rod(p(1.08,.53),p(1.38,.53),'chrome');mesh(new T.CylinderGeometry(.025,.025,.65,8),'dark',0,1.38,.53,Math.PI/2);
  }
+ return root;
+}
+
+export function makeDetailedVehicle(type:string,color:string,style='sedan'){
+ const root=new T.Group();
+ const mats={body:new T.MeshStandardMaterial({color,roughness:.42,metalness:.24}),dark:new T.MeshStandardMaterial({color:'#182027',roughness:.68}),glass:new T.MeshStandardMaterial({color:'#6f96a1',roughness:.16,metalness:.42,transparent:true,opacity:.82}),chrome:new T.MeshStandardMaterial({color:'#b8c0bd',metalness:.75,roughness:.24}),light:new T.MeshBasicMaterial({color:'#ffdda3'}),red:new T.MeshBasicMaterial({color:'#d95743'}),rubber:new T.MeshStandardMaterial({color:'#111419',roughness:.92}),trim:new T.MeshStandardMaterial({color:'#4d5860',roughness:.54,metalness:.3})};
+ const mesh=(geometry:T.BufferGeometry,material:keyof typeof mats,x=0,y=0,z=0,rotation=0)=>{const item=new T.Mesh(geometry,mats[material]);item.position.set(x,y,z);item.rotation.z=rotation;item.castShadow=true;item.receiveShadow=true;root.add(item);return item};
+ const rod=(a:T.Vector3,b:T.Vector3,radius=.035,material:keyof typeof mats='body')=>{const item=new T.Mesh(new T.CylinderGeometry(radius,radius,a.distanceTo(b),8),mats[material]);item.position.copy(a).add(b).multiplyScalar(.5);item.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),b.clone().sub(a).normalize());item.castShadow=true;root.add(item);return item};
+ const wheel=(x:number,z:number,r=.42)=>{const tire=mesh(new T.CylinderGeometry(r,r,.26,18),'rubber',x,r+.02,z,Math.PI/2),hub=mesh(new T.CylinderGeometry(r*.58,r*.58,.275,12),'chrome',x,r+.02,z,Math.PI/2);for(const item of [tire,hub]){item.userData.hsWheel=true;item.userData.hsFront=z>0;item.userData.hsBaseY=r+.02}for(let i=0;i<5;i++){const spoke=new T.Mesh(new T.BoxGeometry(.035,.025,r*1.04),mats.chrome);spoke.position.set(x,r+.02,z);spoke.rotation.y=i*Math.PI/5;root.add(spoke)}};
+ if(type==='car'){
+  const isVan=style==='van',isCoupe=style==='coupe',isHatch=style==='hatch';
+  const length=isVan?4.65:isCoupe?3.78:isHatch?3.92:4.28,bodyHeight=isVan?.86:isCoupe?.56:.66,roofHeight=isVan?1.68:isCoupe?1.42:1.5,wheelZ=length*.315,wheelR=isVan?.44:isCoupe?.39:.42;
+  mesh(new RoundedBoxGeometry(isVan?1.98:1.9,bodyHeight,length,3,.13),'body',0,.66,0);
+  mesh(new RoundedBoxGeometry(isVan?1.74:1.72,.22,length*.72,2,.06),'trim',0,.49,0);
+  const greenhouseLength=isVan?2.35:isCoupe?1.76:isHatch?1.92:2.08;
+  mesh(new RoundedBoxGeometry(isVan?1.72:1.62,isVan?1.0:.74,greenhouseLength,2,.13),'glass',0,roofHeight-.34,isVan?-.05:-.15);
+  mesh(new RoundedBoxGeometry(isVan?1.77:1.68,.13,greenhouseLength+.12,2,.05),'body',0,roofHeight+.17,isVan?-.05:-.15);
+  mesh(new RoundedBoxGeometry(isVan?1.81:1.75,.13,.48,2,.04),'body',0,1.08,length*.30);
+  mesh(new RoundedBoxGeometry(isVan?1.81:1.75,.13,.54,2,.04),'body',0,1.04,-length*.34);
+  for(const x of [-.86,.86]){mesh(new T.BoxGeometry(.06,isVan?.78:.55,.08),'trim',x,roofHeight-.45,-.16);mesh(new RoundedBoxGeometry(.22,.13,.28,2,.04),'body',x*1.04,1.09,.36)}
+  for(const z of [-wheelZ,wheelZ])for(const x of [-.98,.98])wheel(x,z,wheelR);
+  mesh(new RoundedBoxGeometry(1.9,.15,.19,1,.035),'chrome',0,.46,length*.505);mesh(new RoundedBoxGeometry(1.9,.15,.19,1,.035),'chrome',0,.46,-length*.505);
+  for(const x of [-.6,.6]){mesh(new RoundedBoxGeometry(.43,.20,.045,1,.01),'light',x,.81,length*.505);mesh(new RoundedBoxGeometry(.42,.18,.045,1,.01),'red',x,.79,-length*.505)}
+  mesh(new T.BoxGeometry(isVan?1.08:.78,.22,.035),'dark',0,.67,length*.51);mesh(new T.BoxGeometry(isVan?1.12:.86,.035),'chrome',0,.85,length*.512);
+  if(isCoupe){mesh(new RoundedBoxGeometry(1.28,.06,.38,1,.025),'body',0,1.12,-length*.47);mesh(new T.BoxGeometry(1.2,.04,.2),'dark',0,1.23,-length*.47)}
+  if(isHatch){mesh(new RoundedBoxGeometry(1.6,.62,.1,1,.03),'glass',0,1.15,-length*.47);mesh(new RoundedBoxGeometry(1.72,.08,.24,1,.025),'body',0,1.57,-length*.43)}
+  if(isVan){for(const z of [-.64,.52])for(const x of [-.9,.9])mesh(new T.BoxGeometry(.04,.45,.62),'glass',x,1.26,z);mesh(new RoundedBoxGeometry(.9,.11,.18,1,.04),'body',0,1.62,-1.72)}
+ }else{
+  const mountain=style==='mountain',road=style==='road',radius=mountain?.48:road?.43:.41;
+  const p=(x:number,y:number,z:number)=>new T.Vector3(x,y,z);
+  for(const z of [-.83,.83]){mesh(new T.TorusGeometry(radius,.035,8,28),'rubber',0,radius+.04,z,Math.PI/2);mesh(new T.TorusGeometry(radius*.78,.015,8,28),'chrome',0,radius+.04,z,Math.PI/2);for(let i=0;i<10;i++){const spoke=new T.Mesh(new T.CylinderGeometry(.006,.006,radius*1.55,4),mats.chrome);spoke.position.set(0,radius+.04,z);spoke.rotation.x=i*Math.PI/5;root.add(spoke)}}
+  const rear=p(0,radius+.04,-.83),bottom=p(0,.56,-.08),seat=p(0,1.1,-.36),head=p(0,1.05,.48),front=p(0,radius+.04,.83);
+  for(const [a,b] of [[rear,bottom],[bottom,seat],[seat,rear],[seat,head],[head,bottom],[head,front]])rod(a,b,mountain?.045:.034,'body');
+  rod(head,p(0,1.42,.54),.028,'chrome');rod(p(0,1.42,.54),p(0,1.42,.78),.026,'dark');mesh(new RoundedBoxGeometry(.26,.08,.44,1,.025),'dark',0,1.15,-.38);
+  rod(bottom,p(.23,.56,-.08),.02,'chrome');rod(bottom,p(-.23,.56,-.08),.02,'chrome');for(const x of [-.26,.26])mesh(new T.BoxGeometry(.18,.035,.07),'dark',x,.56,-.08);
+  if(mountain){mesh(new T.CylinderGeometry(.035,.035,.74,8),'chrome',.12,.75,.52);mesh(new T.CylinderGeometry(.035,.035,.74,8),'chrome',-.12,.75,.52);mesh(new RoundedBoxGeometry(.18,.08,.36,1,.03),'body',0,1.28,.33)}
+  if(road){mesh(new RoundedBoxGeometry(.18,.07,.42,1,.025),'dark',0,1.16,-.38);mesh(new T.TorusGeometry(.14,.018,6,16),'chrome',0,1.44,.54,Math.PI/2)}
+ }
+ root.userData.vehicleStyle=style;
  return root;
 }

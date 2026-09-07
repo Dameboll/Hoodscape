@@ -42,7 +42,11 @@ export const PLACES:Place[]=[
 ,{id:'cornerwest',name:'West Corner',x:-46,z:12,kind:'crime',color:'#d17869',hint:'Work the corner while keeping police out of sight.'}
 ,{id:'cornereast',name:'East Corner',x:44,z:13,kind:'crime',color:'#d17869',hint:'A busier corner with more exposure.'}
 ,{id:'rowhouse',name:'Vacant Rowhouse',x:-44,z:51,kind:'crime',color:'#d17869',hint:'A locked residence with valuables inside.'}
-,{id:'dice',name:'Alley Dice',x:-44,z:-3,kind:'activity',color:'#d8aa56',hint:'Timed street dice games. Choose before the clock runs out.'}
+	,{id:'dice',name:'Alley Dice',x:-44,z:-3,kind:'activity',color:'#d8aa56',hint:'Timed street dice games. Choose before the clock runs out.'}
+	,{id:'ember_contact',name:'Ember Court',x:-40,z:-59,kind:'crew',color:'#c65c52',hint:'A south-court crew sizing up new faces.'}
+	,{id:'copper_contact',name:'Copperline',x:-40,z:64,kind:'crew',color:'#d49a56',hint:'Northline runners with a route for everything.'}
+	,{id:'jade_contact',name:'Jade Relay',x:39,z:36,kind:'crew',color:'#56a28a',hint:'A freight-yard crew trading in favors and information.'}
+	,{id:'iron_contact',name:'Iron North',x:40,z:-10,kind:'crew',color:'#74899c',hint:'A disciplined crew posted up by Mercer Records.'}
 ];
 export const NPCS=[
 {id:'malik',name:'Malik',x:-10.5,z:27,color:'#668a77',role:'Market owner'},
@@ -70,8 +74,16 @@ export const NPCS=[
 {id:'andre',name:'Andre',x:-45,z:43,color:'#667f72',role:'Walking his dog',routine:'walk'},
 {id:'maya',name:'Maya',x:45,z:21,color:'#9a6f63',role:'Coming off shift',routine:'cross'},
 {id:'noelle',name:'Noelle',x:-44,z:-3,color:'#8b7594',role:'Sketching the block',routine:'stand'},
-{id:'darnell',name:'Darnell',x:43,z:61,color:'#647f91',role:'Bus route regular',routine:'wait'},
-{id:'rico',name:'Rico',x:-48,z:5,color:'#754f47',role:'Southside rival',routine:'rival'},
+	{id:'darnell',name:'Darnell',x:43,z:61,color:'#647f91',role:'Bus route regular',routine:'wait'},
+	{id:'zuri',name:'Zuri',x:-40,z:-59,color:'#c65c52',role:'Ember Court contact',routine:'stand',crew:'ember'},
+	{id:'aron',name:'Aron',x:-38,z:-53,color:'#a94345',role:'Ember Court lookout',routine:'walk',crew:'ember'},
+	{id:'benji',name:'Benji',x:-40,z:64,color:'#d49a56',role:'Copperline contact',routine:'stand',crew:'copper'},
+	{id:'ivy',name:'Ivy',x:-39,z:58,color:'#b77a42',role:'Copperline runner',routine:'walk',crew:'copper'},
+	{id:'simone',name:'Simone',x:39,z:36,color:'#56a28a',role:'Jade Relay contact',routine:'stand',crew:'jade'},
+	{id:'wade',name:'Wade',x:40,z:42,color:'#3e806c',role:'Jade Relay spotter',routine:'walk',crew:'jade'},
+	{id:'voss',name:'Voss',x:40,z:-10,color:'#74899c',role:'Iron North contact',routine:'stand',crew:'iron'},
+	{id:'dana',name:'Dana',x:41,z:-2,color:'#526979',role:'Iron North runner',routine:'walk',crew:'iron'},
+	{id:'rico',name:'Rico',x:-48,z:5,color:'#754f47',role:'Southside rival',routine:'rival'},
 {id:'shay',name:'Shay',x:56,z:37,color:'#805663',role:'Freight-yard rival',routine:'rival'},
 {id:'knox',name:'Knox',x:43,z:-59,color:'#4b586b',role:'Court rival',routine:'rival'}
 ];
@@ -83,4 +95,9 @@ export const JOBS=[
 {id:'threads',name:'Fresh shipment',giver:'clothes',target:'deli',description:'Drop Nia’s neighborhood pop-up flyers at Mercer Market.',reward:35,xp:65,skill:'Hustling' as Skill,rep:15,requires:1},
 {id:'longrun',name:'Across the neighborhood',giver:'pawn',target:'laundry',description:'Walk an insured package across The Towers for Eli.',reward:70,xp:120,skill:'Hustling' as Skill,rep:25,requires:3}
 ];
-export const VEHICLE_DEFS=[{id:'bike1',name:'Mercer BMX',type:'bike',x:-10,z:36,color:'#d8914e',value:80,require:1},{id:'bike2',name:'City bicycle',type:'bike',x:19,z:-23,color:'#708f84',value:90,require:1},{id:'sedan1',name:'1998 Regent',type:'car',x:6,z:39,color:'#91a8a1',value:650,require:10},{id:'sedan2',name:'1996 Marlow',type:'car',x:-6,z:-27,color:'#ac6c55',value:550,require:10}];
+export const VEHICLE_DEFS=[
+ {id:'bike1',name:'Mercer BMX',type:'bike',style:'bmx',x:-10,z:36,color:'#d8914e',value:80,require:1},
+ {id:'bike2',name:'City bicycle',type:'bike',style:'road',x:19,z:-23,color:'#708f84',value:90,require:1},
+ {id:'sedan1',name:'1998 Regent',type:'car',style:'sedan',x:6,z:39,color:'#91a8a1',value:650,require:10},
+ {id:'sedan2',name:'1996 Marlow',type:'car',style:'coupe',x:-6,z:-27,color:'#ac6c55',value:550,require:10}
+];
