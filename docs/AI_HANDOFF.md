@@ -12,7 +12,7 @@ The tone is dramatic urban mystery with grounded relationships and consequences.
 
 The project is a Next/Vinext + React shell around an imperative Three.js/Rapier runtime.
 
-- Story Chapters 1–3 are implemented with branching choices, relationship values, evidence, side quests, economic consequences, and multiple chapter endings.
+- Story Chapters 1–4 are implemented with branching choices, relationship values, evidence, side quests, economic consequences, and multiple chapter endings.
 - The city has residents, police, traffic, homes, shops, vehicles, jobs, street crime, heat, weapons, combat, skill progression, and deterministic save-safe transactions.
 - Character creation supports identity, skin, hair, style, frame, face, head style, physique, background, and personality. Face/head/physique variants are rendered procedurally over the authored resident GLB and are persisted in the profile.
 - Onboarding offers Story or Sandbox routing and explains movement, interaction, progression, crime consequences, PvP, activities, and timed decisions.
@@ -26,7 +26,7 @@ The project is a Next/Vinext + React shell around an imperative Three.js/Rapier 
 - `game/simulation/profile.ts`: all creator option arrays and profile validation.
 - `game/simulation/state.ts`: `Save`, validation, IndexedDB persistence, and additive migration.
 - `game/simulation/session.ts`: player-facing transactions, jobs, story panels, and activity hooks.
-- `game/simulation/story.ts`, `story-panels.ts`, `game/ui/StoryJournal.tsx`: story state and authored dialogue.
+- `game/simulation/story.ts`, `story-panels.ts`, `chapter-two.ts`, `chapter-three.ts`, `chapter-four.ts`, `game/ui/StoryJournal.tsx`: story state and authored dialogue.
 - `app/api/world/route.ts`: authenticated cloud player save/presence endpoint.
 - `app/api/pvp/route.ts`: server-authoritative PvP endpoint.
 - `db/schema.ts` and `drizzle/`: D1 player schema/migration.
@@ -61,4 +61,4 @@ The local/offline slice uses IndexedDB. Hosted account/cloud/PvP behavior requir
 - Cloud browser WebGL has previously been disabled, so visual 3D QA must be done on a WebGL-capable browser.
 - The online system is a foundation/alpha, not a full MMO backend: presence is near-player polling, there is no matchmaking, moderation, party system, or authoritative movement simulation yet.
 - The basketball activity is currently a deterministic timing session rather than full 3D ball physics.
-- Chapters 4–8 and the NPC-conscious postgame are outlined but not yet shipped.
+- Chapters 4’s ending sets up Chapter 5; Chapters 5–8 and the NPC-conscious postgame are outlined but not yet shipped.

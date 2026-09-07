@@ -4,7 +4,7 @@ Canonical story outline. SPOILERS. This document is for development; do not put 
 
 ## Scope and production rule
 
-Eight main chapters, each with several Moves and optional character arcs. Chapters 1–3 are implemented in the current early-access build; later chapters remain outlined. Continue to build one complete chapter at a time inside the existing game, using persistent decisions, evidence, relationships, and world-state flags. No runtime language-model calls are required. Dialogue and reactions are authored, deterministic, and local.
+Eight main chapters, each with several Moves and optional character arcs. Chapters 1–4 are implemented in the current early-access build; later chapters remain outlined. Continue to build one complete chapter at a time inside the existing game, using persistent decisions, evidence, relationships, and world-state flags. No runtime language-model calls are required. Dialogue and reactions are authored, deterministic, and local.
 
 Character creation/backgrounds, job promotion ladders, and skill perks remain separate planned systems. Do not let them erase or replace existing progression. The camera has a reported awkward feel but remains out of scope for this story pass.
 
@@ -65,13 +65,15 @@ Decision: save a threatened business, preserve incriminating records, or expose 
 
 Sides: help a displaced merchant reopen; investigate duplicate employee records; build independent tenant communication.
 
-## Chapter 4 — People Who Never Existed [OUTLINED]
+## Chapter 4 — People Who Never Existed [IMPLEMENTED]
 
-Moves: An Empty Apartment; Nobody by That Name; The Things They Left; Two Versions of Tuesday; Keep Someone Real.
+Moves: The Photograph That Forgot; Two Versions of Tuesday; The Things They Left; Keep Someone Real; No More Blank Pages.
 
-A known resident disappears. Their apartment and public records change; residents remember contradictory histories. Objects protected through prior side quests retain evidence. June's photograph and Ruiz's analog recorder provide distinct recovery paths.
+A resident named Theo Wells — June’s childhood neighbor, present in her envelope photograph — has been removed from records, signage, and most residents’ memories. June and (dimly) Ruiz still remember him. Evidence routes depend on prior side quests: June’s photograph (Chapter 1 keepsake favor) proves him on paper, Ruiz’s repaired recorder (Chapter 2) preserves the 1998 pickup log, and Vale access from Chapter 3 liaison choices opens his personnel file (flagged “contagious”). Bishop traces the rent fund when the player lacks access. Without favors, routes still complete with testimony-grade evidence and signposted thinner outcomes.
 
-Decision: protect an unstable remembered person, release their records publicly, or let Vale investigate under controlled conditions. Their future trust and availability change. Provide an alternate route if the player skipped optional evidence; optional quests improve outcomes rather than becoming hidden mandatory gates.
+Decision: protect Theo by keeping him unlisted, publish his name through the tenant line, or file a status request through Vale’s account (requires Vale access; otherwise a weaker probe). Publish with strong proof raises Heat; every route ends with the citywide “BASELINE RECALIBRATION COMPLETE” broadcast that sets up Chapter 5.
+
+Sides: posters carrying Theo’s name on the tenant sheet; Jay’s night-shift account of the 1998 van; walking June’s old route to keep landmarks standing. Optional favors improve outcomes rather than becoming hidden mandatory gates.
 
 ## Chapter 5 — Behind the City [OUTLINED]
 
