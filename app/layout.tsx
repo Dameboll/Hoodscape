@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./visual-overhaul.css";
 
 export const metadata: Metadata = {
   title: "HOODSCAPE — The Towers",

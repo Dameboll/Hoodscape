@@ -1,0 +1,77 @@
+{
+  "character": {
+    "file": "mercer-resident-refined.glb",
+    "bbox_xyz": [
+      -0.537092387676239,
+      0.5350000858306885,
+      -0.027500007301568985,
+      1.8700000047683716,
+      -0.23000000417232513,
+      0.2813858389854431
+    ],
+    "dimensions_m": [
+      1.0720924735069275,
+      1.8975000120699406,
+      0.5113858431577682
+    ],
+    "triangles": 12392,
+    "root": "MercerResident",
+    "materials": [
+      "skin",
+      "jacket",
+      "pants",
+      "shoe",
+      "dark",
+      "white"
+    ],
+    "animation_clips": [
+      "Idle",
+      "Walk",
+      "Run",
+      "Attack"
+    ],
+    "joint_names": [
+      "ArmL",
+      "ArmR",
+      "ForearmL",
+      "ForearmR",
+      "LegL",
+      "LegR",
+      "CalfL",
+      "CalfR"
+    ]
+  },
+  "sedan": {
+    "file": "fictional-sedan.glb",
+    "bbox_xyz": [
+      -1.0255134105682373,
+      1.0255134105682373,
+      -0.0679999589920044,
+      1.559999942779541,
+      -2.309000015258789,
+      2.309000015258789
+    ],
+    "dimensions_m": [
+      2.0510268211364746,
+      1.6279999017715454,
+      4.618000030517578
+    ],
+    "triangles": 13508,
+    "root": "FictionalSedan",
+    "materials": [
+      "sedan-paint",
+      "sedan-accent",
+      "tire-rubber",
+      "rim-metal",
+      "glass",
+      "seat-leather"
+    ],
+    "wheel_nodes": [
+      "wheel_fl",
+      "wheel_fr",
+      "wheel_rl",
+      "wheel_rr"
+    ],
+    "orientation": "+Z forward, Y up"
+  }
+}

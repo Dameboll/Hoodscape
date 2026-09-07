@@ -1,0 +1,217 @@
+/* HOODSCAPE visual milestone: presentation only. Game state, controls, and save flows stay in app/page.tsx. */
+@font-face{font-family:'Barlow Condensed';src:url('/fonts/BarlowCondensed-Regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/fonts/BarlowCondensed-SemiBold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Barlow Condensed';src:url('/fonts/BarlowCondensed-Black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'Source Sans 3';src:url('/fonts/SourceSans3-Variable.ttf') format('truetype');font-weight:200 900;font-style:normal;font-display:swap}
+
+:root{--hs-charcoal:#171716;--hs-concrete:#aaa298;--hs-bone:#eee9df;--hs-brick:#8b4f41;--hs-vermilion:#d45138;--hs-rule:#eee9df33;--hs-muted:#aaa298;--font-display:'Barlow Condensed','Arial Narrow',sans-serif;--font-body:'Source Sans 3',Arial,sans-serif}
+html,body{background:var(--hs-charcoal);color:var(--hs-bone);font-family:var(--font-body)}
+button,input{font-family:var(--font-body)}
+button:focus-visible{outline-color:var(--hs-vermilion)!important}
+
+/* Title card: a deliberate editorial masthead with rules and a single strong wordmark. */
+main.game-shell{background:var(--hs-charcoal);color:var(--hs-bone)}
+main.game-shell .vignette{background:linear-gradient(180deg,#17171680,transparent 26%,transparent 68%,#171716d9)!important;box-shadow:inset 0 0 160px #00000080!important}
+main.game-shell .loading-screen{background:var(--hs-charcoal)!important;color:var(--hs-bone)}
+main.game-shell .wordmark{font-family:var(--font-display);font-size:clamp(72px,12vw,150px);font-weight:900;letter-spacing:.02em;color:var(--hs-bone);line-height:.78}
+main.game-shell .wordmark span{font-family:var(--font-body);font-size:11px;letter-spacing:.36em;color:var(--hs-concrete);margin-top:25px}
+main.game-shell .loading-track{background:var(--hs-rule)}
+main.game-shell .loading-track i{background:var(--hs-vermilion)}
+main.game-shell .loading-screen p{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .title-screen{padding:clamp(22px,4vw,54px);background:linear-gradient(90deg,#171716f5 0%,#171716d9 28%,#17171655 62%,transparent 100%)!important}
+main.game-shell .title-screen:before{content:'';position:absolute;inset:clamp(22px,4vw,54px);border-top:1px solid var(--hs-rule);border-bottom:1px solid var(--hs-rule);pointer-events:none}
+main.game-shell .title-top,main.game-shell .title-bottom{position:relative;z-index:1;font-family:var(--font-body)}
+main.game-shell .district-tag{color:var(--hs-concrete);font-size:11px;letter-spacing:.2em;font-weight:600}
+main.game-shell .icon-button{border:1px solid var(--hs-rule);background:#17171688;color:var(--hs-bone);border-radius:0;transition:background .18s,border-color .18s}
+main.game-shell .icon-button:hover{background:var(--hs-brick);border-color:var(--hs-bone)}
+main.game-shell .title-content{position:relative;z-index:1;margin-top:30px;width:min(760px,100%)}
+main.game-shell .eyebrow{font-family:var(--font-body);font-size:11px;letter-spacing:.18em;color:var(--hs-concrete);font-weight:600}
+main.game-shell .eyebrow>span{width:34px;height:1px;background:var(--hs-vermilion)}
+main.game-shell .title-content h1{font-family:var(--font-display);font-size:clamp(86px,13vw,188px);font-weight:900;line-height:.78;letter-spacing:.015em;color:var(--hs-bone);text-shadow:none;margin:25px 0 28px}
+main.game-shell .title-content h1 span{display:inline;color:var(--hs-vermilion)}
+main.game-shell .title-content h1 b{font-family:var(--font-body);font-size:13px;letter-spacing:0;color:var(--hs-concrete);top:-4px;right:auto;margin-left:9px}
+main.game-shell .title-description{font-family:var(--font-body);font-size:18px;line-height:1.42;color:var(--hs-concrete);margin:0 0 31px;border-left:2px solid var(--hs-vermilion);padding-left:16px}
+main.game-shell .start-button{min-width:310px;min-height:52px;padding:13px 18px!important;background:var(--hs-vermilion)!important;color:var(--hs-bone)!important;border:1px solid #ef8a71!important;border-radius:0!important;box-shadow:5px 5px 0 #00000066;font-family:var(--font-body);font-size:12px!important;letter-spacing:.12em;font-weight:700!important;transition:transform .18s,background .18s}
+main.game-shell .start-button:hover{background:#e2684f!important;transform:translate(-2px,-2px)}
+main.game-shell .start-note{font-family:var(--font-body);color:var(--hs-concrete);font-size:11px;letter-spacing:.1em;margin-top:22px}
+main.game-shell .start-note i{background:var(--hs-vermilion);width:4px;height:4px}
+main.game-shell .title-bottom{font-size:11px;letter-spacing:.14em;color:var(--hs-bone)}
+main.game-shell .title-bottom span span,main.game-shell .edition{color:var(--hs-concrete)}
+
+/* In-world readouts: compact black labels, bone type, one vermilion signal color. */
+main.game-shell .hud-top{left:clamp(18px,3vw,42px);right:clamp(18px,3vw,42px);top:clamp(18px,3vw,34px)}
+main.game-shell .identity{gap:13px;text-shadow:0 2px 12px #000000cc}
+main.game-shell .brand-mark{font-family:var(--font-display);font-size:49px;font-weight:900;letter-spacing:-.02em;border-right:1px solid var(--hs-rule);color:var(--hs-bone);padding-right:16px}
+main.game-shell .brand-mark span{font-family:var(--font-body);font-size:10px;letter-spacing:.25em;color:var(--hs-vermilion);margin-top:7px}
+main.game-shell .identity strong{font-family:var(--font-display);font-size:22px;letter-spacing:.09em;color:var(--hs-bone)}
+main.game-shell .identity>div>span{font-family:var(--font-body);font-size:11px;letter-spacing:.14em;color:var(--hs-concrete)}
+main.game-shell .identity i{background:var(--hs-vermilion)}
+main.game-shell .top-actions{gap:12px}
+main.game-shell .online-status{background:#171716cc;border-color:var(--hs-rule);color:var(--hs-concrete);font-family:var(--font-body);font-size:10px;letter-spacing:.1em}
+main.game-shell .online-status i{background:var(--hs-vermilion);box-shadow:0 0 9px #d45138}
+main.game-shell .cash-display{color:var(--hs-bone)}
+main.game-shell .cash-display span{font-family:var(--font-body);font-size:10px;letter-spacing:.17em;color:var(--hs-concrete)}
+main.game-shell .cash-display strong{font-family:var(--font-display);font-size:31px;letter-spacing:.02em}
+main.game-shell .map-hud{right:clamp(18px,3vw,42px);top:102px}
+main.game-shell .map-frame{border:1px solid var(--hs-rule);box-shadow:0 6px 30px #00000088;background:#17171699}
+main.game-shell .map-coordinate,main.game-shell .district-time{font-family:var(--font-body);font-size:10px;letter-spacing:.12em;color:var(--hs-concrete)}
+main.game-shell .district-time span{color:var(--hs-vermilion)}
+main.game-shell .north{font-family:var(--font-display);color:var(--hs-bone)}
+main.game-shell .heat{color:var(--hs-vermilion)}
+main.game-shell .heat small{font-family:var(--font-body);color:var(--hs-bone)}
+main.game-shell .pvp-control{right:clamp(18px,3vw,42px);top:282px}
+main.game-shell .pvp-control button{background:#171716dd;border-color:var(--hs-rule);color:var(--hs-bone);border-radius:0;font-family:var(--font-body);font-size:10px;letter-spacing:.12em}
+main.game-shell .pvp-control button.ready{background:var(--hs-brick);border-color:#df816f;color:var(--hs-bone)}
+main.game-shell .pvp-control small{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .street-rank{left:clamp(18px,3vw,42px);top:99px;padding:8px 12px;background:#171716c9;border-left:2px solid var(--hs-vermilion);color:var(--hs-bone);font-family:var(--font-display);font-size:17px;letter-spacing:.08em}
+main.game-shell .street-rank small{font-family:var(--font-body);font-size:9px;letter-spacing:.1em;color:var(--hs-concrete)}
+main.game-shell .objective{left:clamp(18px,3vw,42px);bottom:123px;text-shadow:0 2px 10px #000}
+main.game-shell .objective-label{font-family:var(--font-body);font-size:10px;letter-spacing:.17em;color:var(--hs-vermilion)}
+main.game-shell .objective-diamond{color:var(--hs-vermilion)}
+main.game-shell .objective strong{font-family:var(--font-display);font-size:23px;letter-spacing:.04em;color:var(--hs-bone)}
+main.game-shell .objective p{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .objective-distance{font-family:var(--font-body);color:var(--hs-bone)}
+main.game-shell .objective-distance button{color:var(--hs-bone);font-family:var(--font-body)}
+main.game-shell .hud-bottom{left:clamp(18px,3vw,42px);right:clamp(18px,3vw,42px);bottom:clamp(18px,3vw,32px)}
+main.game-shell .quick-nav button{background:#171716cc;border:1px solid var(--hs-rule);border-radius:0;color:var(--hs-bone);font-family:var(--font-body)}
+main.game-shell .quick-nav button:hover{background:var(--hs-brick);border-color:var(--hs-bone)}
+main.game-shell .quick-nav kbd,main.game-shell kbd{border-color:var(--hs-rule);background:#17171699;color:var(--hs-concrete);font-family:var(--font-body)}
+main.game-shell .weapon-readout{font-family:var(--font-body);color:var(--hs-concrete);border-left-color:var(--hs-rule)}
+main.game-shell .hot-cash{font-family:var(--font-body);color:var(--hs-vermilion);border-left-color:var(--hs-rule)}
+main.game-shell .save-indicator,main.game-shell .controls-hint{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .vitals b{font-family:var(--font-display);font-size:16px;color:var(--hs-bone)}
+main.game-shell .vitals svg{color:var(--hs-bone)}
+main.game-shell .meter{background:#171716d9}
+main.game-shell .meter i{background:var(--hs-bone)}
+main.game-shell .meter.stamina i{background:var(--hs-vermilion)}
+main.game-shell .interaction{background:#171716ed;border-color:var(--hs-rule);color:var(--hs-bone);font-family:var(--font-body)}
+main.game-shell .interaction kbd{background:var(--hs-vermilion);color:var(--hs-bone);border:0}
+main.game-shell .toasts{font-family:var(--font-body)}
+main.game-shell .toast{background:#171716f0;border-left-color:var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .toast p{color:var(--hs-concrete)}
+main.game-shell .toast.level{background:var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .toast.level p{color:var(--hs-bone)}
+main.game-shell .enemy-hud>span{font-family:var(--font-body);color:var(--hs-vermilion)}
+main.game-shell .enemy-hud strong{font-family:var(--font-display);font-size:23px;color:var(--hs-bone)}
+main.game-shell .enemy-hud>div{background:#171716d9}
+main.game-shell .enemy-hud i{background:var(--hs-vermilion)}
+main.game-shell .enemy-hud small{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .aim-reticle i{background:var(--hs-bone)}
+main.game-shell .aim-reticle b{color:var(--hs-vermilion)}
+
+/* One pause/menu treatment, shared by the existing dialog controls. */
+main.game-shell .game-dialog{background:var(--hs-charcoal)!important;border:1px solid var(--hs-rule)!important;border-top:3px solid var(--hs-vermilion)!important;border-radius:0!important;color:var(--hs-bone)!important;box-shadow:0 26px 100px #000000d9!important;font-family:var(--font-body)}
+main.game-shell .menu-signal{font-family:var(--font-body);color:var(--hs-concrete);border-bottom:1px solid var(--hs-rule);padding-bottom:12px}
+main.game-shell .menu-signal b{color:var(--hs-vermilion)}
+main.game-shell .menu-tabs{border-bottom-color:var(--hs-rule)}
+main.game-shell .menu-tab{border-radius:0;color:var(--hs-concrete);font-family:var(--font-body)}
+main.game-shell .menu-tab.selected{background:var(--hs-brick);color:var(--hs-bone)}
+main.game-shell .dialog-eyebrow{font-family:var(--font-body);font-size:10px;letter-spacing:.18em;color:var(--hs-vermilion)}
+main.game-shell .dialog-title{font-family:var(--font-display)!important;font-size:45px!important;line-height:.92!important;letter-spacing:.03em!important;color:var(--hs-bone)!important}
+main.game-shell .dialog-description{font-family:var(--font-body);color:var(--hs-concrete)!important}
+main.game-shell .pause-dashboard{gap:8px}
+main.game-shell .pause-card{background:#232321;border:1px solid var(--hs-rule);border-top:2px solid var(--hs-brick)}
+main.game-shell .pause-card span,main.game-shell .pause-card small{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .pause-card strong{font-family:var(--font-display);font-size:25px;color:var(--hs-bone)}
+main.game-shell .pause-card strong.hot{color:var(--hs-vermilion)}
+main.game-shell .menu-action{background:#232321!important;border:1px solid var(--hs-rule)!important;border-radius:0!important;color:var(--hs-bone)!important;font-family:var(--font-body);min-height:46px!important}
+main.game-shell .menu-action:hover{background:var(--hs-brick)!important;border-color:var(--hs-bone)!important}
+main.game-shell .primary-action{background:var(--hs-vermilion)!important;color:var(--hs-bone)!important;border-radius:0!important;font-family:var(--font-body);font-weight:700}
+main.game-shell .text-button{color:var(--hs-concrete)!important;font-family:var(--font-body)}
+main.game-shell .pause-controls{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .menu-filter{background:#232321;border-color:var(--hs-rule);color:var(--hs-concrete);font-family:var(--font-body)}
+main.game-shell .menu-filter.selected{background:var(--hs-brick);color:var(--hs-bone);border-color:var(--hs-bone)}
+main.game-shell .inventory-slot,.game-dialog .inventory-slot{background:#232321;border-color:var(--hs-rule);color:var(--hs-bone)}
+main.game-shell .inventory-slot.selected{background:var(--hs-brick);border-color:var(--hs-bone)}
+main.game-shell .item-icon,main.game-shell .skill-icon{color:var(--hs-vermilion)}
+main.game-shell .skill-row{border-color:var(--hs-rule)}
+main.game-shell .skill-row b,main.game-shell .skill-detail span,main.game-shell .journal-list article>span{color:var(--hs-vermilion)}
+main.game-shell .skill-track{background:#232321}
+main.game-shell .skill-track i{background:var(--hs-vermilion)}
+main.game-shell .journal-list article{background:#232321;border-color:var(--hs-rule)}
+main.game-shell .journal-list .active-job{background:#2a2421;border-left-color:var(--hs-vermilion)}
+main.game-shell .journal-list p,main.game-shell .journal-list footer{color:var(--hs-concrete)}
+
+/* Character creator: transparent full-body stage stays open to the live model canvas. */
+main.game-shell .creator-shell{font-family:var(--font-body);color:var(--hs-bone);background:transparent}
+main.game-shell .creator-shell:before{background:linear-gradient(90deg,#171716d9 0%,#17171644 27%,transparent 68%,#171716cc 100%),linear-gradient(0deg,#17171688,transparent 35%,#17171655)!important}
+main.game-shell .creator-header{height:62px;padding:0 clamp(16px,3vw,44px);background:#171716ed;border-bottom:1px solid var(--hs-rule)}
+main.game-shell .creator-header span,main.game-shell .creator-kicker{font-family:var(--font-body);color:var(--hs-vermilion);font-size:10px;letter-spacing:.18em}
+main.game-shell .creator-header strong{font-family:var(--font-display);font-size:15px;letter-spacing:.08em;color:var(--hs-bone)}
+main.game-shell .creator-header button,main.game-shell .creator-back{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .creator-header button:hover,main.game-shell .creator-back:hover{color:var(--hs-vermilion)}
+main.game-shell .creator-layout{grid-template-columns:170px minmax(0,1fr) minmax(360px,440px);grid-template-areas:'steps preview panel';background:transparent}
+main.game-shell .creator-steps{padding:28px 14px;background:#171716e8;border-right:1px solid var(--hs-rule)}
+main.game-shell .creator-steps:before{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .creator-steps button{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .creator-steps button b{border-color:var(--hs-concrete)}
+main.game-shell .creator-steps button.active{border-color:#d4513866;background:#d4513822}
+main.game-shell .creator-steps button.active b{background:var(--hs-vermilion);border-color:var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .creator-steps button.done b{border-color:var(--hs-bone);color:var(--hs-bone)}
+main.game-shell .creator-panel{padding:32px 28px 18px;background:#171716f2;border-left:1px solid var(--hs-rule)}
+main.game-shell .creator-panel h1{font-family:var(--font-display);font-size:42px;line-height:.9;letter-spacing:.02em;color:var(--hs-bone)}
+main.game-shell .creator-lede{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .name-field>span,main.game-shell .choice-section h2{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .name-field input{font-family:var(--font-display);background:#232321;border:1px solid var(--hs-rule);border-left:3px solid var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .name-field input:focus{border-color:var(--hs-vermilion);box-shadow:0 0 0 3px #d4513833}
+main.game-shell .compact-choices button,main.game-shell .swatch-row button,main.game-shell .origin-grid>button,main.game-shell .review-grid article{background:#232321;border-color:var(--hs-rule);color:var(--hs-bone);font-family:var(--font-body)}
+main.game-shell .compact-choices button.selected,main.game-shell .origin-grid>button.selected{background:var(--hs-brick);border-color:var(--hs-bone);box-shadow:none}
+main.game-shell .compact-choices button small,main.game-shell .origin-grid>button>span,main.game-shell .origin-grid>button p,main.game-shell .review-grid article p{color:var(--hs-concrete)}
+main.game-shell .origin-grid>button b,main.game-shell .review-grid article b{color:var(--hs-vermilion)}
+main.game-shell .review-name{background:var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .review-name strong{font-family:var(--font-display)}
+main.game-shell .consequence-note{border-left-color:var(--hs-vermilion);background:#232321}
+main.game-shell .consequence-note strong{color:var(--hs-vermilion)}
+main.game-shell .creator-footer{background:#171716f2;border-top-color:var(--hs-rule)}
+main.game-shell .creator-next{background:var(--hs-vermilion)!important;color:var(--hs-bone)!important;border-radius:0!important;font-family:var(--font-body)}
+main.game-shell .creator-preview{background:radial-gradient(ellipse at 52% 48%,#d4513822 0%,#17171622 42%,transparent 76%);padding:32px 36px}
+main.game-shell .creator-preview:before{background:linear-gradient(90deg,transparent,var(--hs-vermilion),transparent);box-shadow:0 0 24px 8px #d4513830}
+main.game-shell .creator-preview:after{border-color:var(--hs-rule)}
+main.game-shell .creator-stage-meta span{font-family:var(--font-body);background:#171716dd;border-left-color:var(--hs-vermilion);color:var(--hs-bone)}
+main.game-shell .creator-stage-meta small,main.game-shell .creator-preview-copy p{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .creator-preview-copy small{font-family:var(--font-body);color:var(--hs-vermilion)}
+main.game-shell .creator-preview-copy strong{font-family:var(--font-display);font-size:48px;color:var(--hs-bone)}
+main.game-shell .creator-preview-copy:after{font-family:var(--font-body);color:var(--hs-concrete)}
+
+@media(max-width:760px){main.game-shell .title-screen:before{inset:18px}main.game-shell .title-content h1{font-size:clamp(76px,22vw,118px)}main.game-shell .title-description{font-size:16px}main.game-shell .creator-layout{grid-template-columns:1fr;grid-template-rows:auto 230px 1fr;grid-template-areas:'steps' 'preview' 'panel'}main.game-shell .creator-preview{padding:14px 18px;background:radial-gradient(ellipse at 50% 42%,#d4513830 0%,transparent 72%)}main.game-shell .creator-panel{padding:22px 16px 12px;border-left:0}main.game-shell .creator-panel h1{font-size:36px}main.game-shell .creator-preview-copy strong{font-size:35px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
+
+/* Gameplay readability correction: retain the authored edge treatment without dimming the city. */
+main.game-shell .vignette{background:linear-gradient(180deg,#17171624,transparent 22%,transparent 78%,#17171638)!important;box-shadow:inset 0 0 100px #00000028!important}
+
+/* Cartographic treatment: warm paper, charcoal streets, and quiet block texture replace the inherited green map. */
+main.game-shell .world-map-overlay{background:#171716f2}
+main.game-shell .world-map-shell{background:#1f2121;border-color:var(--hs-rule);box-shadow:0 30px 90px #000000cc}
+main.game-shell .world-map-header{background:#252727;border-color:var(--hs-rule)}
+main.game-shell .map-kicker{font-family:var(--font-body);color:var(--hs-vermilion)}
+main.game-shell .world-map-header h2{font-family:var(--font-display);font-weight:900;letter-spacing:.04em;color:var(--hs-bone)}
+main.game-shell .world-map-header p{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .map-close{font-family:var(--font-body);background:#171716cc;border-color:var(--hs-rule);color:var(--hs-bone)}
+main.game-shell .world-map-stage{background:#242727;border:1px solid var(--hs-rule);box-shadow:inset 0 0 0 1px #eee9df12,inset 0 0 80px #00000055}
+main.game-shell .world-map-stage svg>rect:first-child{fill:#242727!important}
+main.game-shell .world-map-stage svg>line{stroke:#73736b!important}
+main.game-shell .world-map-stage svg>rect:not(:first-child){fill:#665e57!important;stroke:#9c8975!important}
+main.game-shell .map-compass{font-family:var(--font-display);color:var(--hs-bone);border-color:var(--hs-rule);background:#171716cc}
+main.game-shell .map-scale{font-family:var(--font-body);letter-spacing:.16em;color:var(--hs-concrete);background:#171716cc}
+main.game-shell .world-map-rail{background:#1b1d1d;border-color:var(--hs-rule)}
+main.game-shell .map-rail-head,.world-map-footer{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .map-filter-list button{font-family:var(--font-body);color:var(--hs-concrete);border-color:transparent;background:transparent}
+main.game-shell .map-filter-list button.selected,main.game-shell .map-filter-list button:hover{background:#8b4f4138;border-color:#d45138;color:var(--hs-bone)}
+main.game-shell .map-legend{font-family:var(--font-body);color:var(--hs-concrete);border-color:var(--hs-rule)}
+main.game-shell .map-selection{background:#252727;border-color:var(--hs-rule);color:var(--hs-bone)}
+main.game-shell .map-selection span{font-family:var(--font-body);color:var(--hs-vermilion)}
+main.game-shell .map-selection h3{font-family:var(--font-display);letter-spacing:.06em}
+main.game-shell .map-selection p,main.game-shell .map-selection small{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .world-map-footer{border-color:var(--hs-rule)}
+main.game-shell .world-map-footer button{font-family:var(--font-body);color:var(--hs-bone);border-color:var(--hs-rule);background:#171716cc}
+
+/* The account gate sits over the daylight title scene; keep the city visible while preserving card contrast. */
+main.game-shell .account-gate{background:linear-gradient(115deg,#1717169e,#17171670 62%,#1717163d),radial-gradient(circle at 72% 40%,#d1b28b24,transparent 34%);color:var(--hs-bone)}
+main.game-shell .account-card{background:#202322e8;border-color:var(--hs-rule);box-shadow:0 35px 100px #00000099}
+main.game-shell .account-mark{background:repeating-linear-gradient(135deg,#eee9df06 0 12px,transparent 12px 24px);border-color:var(--hs-rule);color:var(--hs-vermilion)}
+main.game-shell .account-copy h1{font-family:var(--font-display);font-weight:900;color:var(--hs-bone)}
+main.game-shell .account-copy>p{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .account-features>span{background:#17171699;border-color:var(--hs-rule);color:var(--hs-vermilion)}
+main.game-shell .account-features small{font-family:var(--font-body);color:var(--hs-concrete)}
+main.game-shell .tutorial-overlay{background:linear-gradient(90deg,#17171655,transparent 64%)}
+main.game-shell .tutorial-card{background:#171716ed;border-color:var(--hs-rule);box-shadow:0 20px 60px #00000099}
