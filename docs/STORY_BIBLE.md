@@ -22,6 +22,7 @@ The player is an inhabitant whose unpredictable relationships create a deviation
 - June: remembers fragments that survived resets. Wants others to take her seriously without turning her into a spectacle. Her missing childhood friend is an early emotional mystery.
 - Ruiz: mechanic, skeptical empiricist. Keeps paper records and analog recordings. Prefers preserving people over publishing a dramatic revelation.
 - Dre: competitive, loyal to people who actually show up. Will oppose the player over secrecy or broken promises. His remembered alternate fights later expose revisions to personal history.
+- Tego: a Spanish kid introduced a few missions into the story through an optional early hustle chain. Choosing to work with him turns the pair into genuine best friends and makes him a major relationship track. He later becomes the hidden schemer who betrays the player; seed his pressure, ambition, and loyalty conflicts fairly so the reveal is painful but earned, never arbitrary.
 - Rosa: cares about practical survival. Supports plans that keep people fed. She can disagree with radical liberation without being a villain.
 - Bishop: broker and rival. Accepting his help creates obligation; defying him earns both resentment and reluctant respect. He can become an ally, opposition leader, or powerful rival according to the player's history.
 - Eli: pawn broker and keeper of discarded objects. Financially opportunistic but protective of the stories attached to them.
