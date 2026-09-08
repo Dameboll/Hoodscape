@@ -34,6 +34,8 @@ The project is a Next/Vinext + React shell around an imperative Three.js/Rapier 
 - `app/api/pvp/route.ts`: server-authoritative PvP endpoint.
 - `db/schema.ts` and `drizzle/`: D1 player schema/migration.
 - `public/models/mercer-resident.glb`: full-body resident asset with Idle, Walk, Run, Attack clips and named body pivots used by the renderer.
+- `public/assets/`: normalized GLB characters, six vehicle bodies, and three held weapons. `game/render/production-assets.ts` loads each once, clones safely, and falls back to procedural art on failure.
+- `tools/assets/` and `tools/blender/`: repeatable offline conversion, image repacking, and Blender cleanup entry points. Read `docs/ASSET_PIPELINE.md` before promoting a new model.
 
 ## Data compatibility
 
@@ -63,6 +65,7 @@ The local/offline slice uses IndexedDB. Hosted account/cloud/PvP behavior requir
 
 - Cloud browser WebGL has previously been disabled, so visual 3D QA must be done on a WebGL-capable browser.
 - The online system is a foundation/alpha, not a full MMO backend: presence is near-player polling, there is no matchmaking, moderation, party system, or authoritative movement simulation yet.
-- NPC appearance variation is deterministic and visual; it is not a large library of bespoke scanned/hand-sculpted character assets. Keep the named skeleton/pivot contract when replacing the GLB.
+- Male NPCs and police can use the normalized rigged foundation; the player and remaining residents retain the procedural model so the current character-creator pivot contract is preserved. The uploaded female GLB is static and must not replace animated residents until it is rigged and deformation-tested.
+- Future story pass: introduce Tego a few discoverable side missions in. Hustling together can build a best-friend bond; he later becomes central to the endgame betrayal and simulation reveal. Do not expose the twist in early UI or quest copy.
 - The basketball activity is currently a deterministic timing session rather than full 3D ball physics.
 - Chapters 4’s ending sets up Chapter 5; Chapters 5–8 and the NPC-conscious postgame are outlined but not yet shipped.

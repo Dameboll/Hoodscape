@@ -46,7 +46,9 @@ npm run start
 | `app/page.tsx` | React shell, HUD, account gate, online sync, menus, and input routing |
 | `app/api/` | Server-authoritative world presence, cloud saves, and PvP verification |
 | `db/` + `drizzle/` | D1 schema and migrations |
-| `public/models/` | Authored resident GLB asset |
+| `public/models/` | Procedural resident GLB and safe character-creator fallback |
+| `public/assets/` | Optimized third-party character, vehicle, and weapon GLBs |
+| `tools/assets/`, `tools/blender/` | Offline conversion, optimization, and Blender preparation tools |
 | `tests/` | Deterministic gameplay and asset checks |
 
 ## AI handoff rules
@@ -57,6 +59,6 @@ The complete continuity notes, story plan, implementation checkpoint, and curren
 
 ## Asset and hosting notes
 
-The resident GLB is authored by `scripts/create-character.mjs`; rerun it only when changing the model. It contains Idle, Walk, Run, and Attack clips and no external textures. The city uses shared materials and merged geometry. Three.js and Rapier retain their upstream licenses through the dependency tree.
+The fallback resident GLB is authored by `scripts/create-character.mjs`; rerun it only when changing that model. Production GLBs and their automatic fallbacks are managed by `game/render/production-assets.ts`. See `docs/ASSET_PIPELINE.md` and `docs/THIRD_PARTY_ASSETS.md` before adding or replacing art. The city uses shared materials and merged geometry. Three.js and Rapier retain their upstream licenses through the dependency tree.
 
 Hosted Sites identity and D1 declarations live in `.openai/hosting.json`. Never place credentials, bearer tokens, or private auth values in this repository.
